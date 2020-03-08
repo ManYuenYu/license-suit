@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dormi.learn.pojo.po.LicenseInfoMapper">
+  <resultMap id="BaseResultMap" type="org.dormi.learn.pojo.po.LicenseInfo">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="account" jdbcType="VARCHAR" property="account"/>
+    <result column="product" jdbcType="VARCHAR" property="product"/>
+    <result column="expired_time" jdbcType="TIMESTAMP" property="expiredTime"/>
+    <result column="max_node" jdbcType="INTEGER" property="maxNode"/>
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+    <result column="enabled" jdbcType="TINYINT" property="enabled"/>
+    <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    <result column="public_key" jdbcType="LONGVARCHAR" property="publicKey"/>
+    <result column="private_key" jdbcType="LONGVARCHAR" property="privateKey"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from license_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.dormi.learn.pojo.po.LicenseInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into license_info (account, product, expired_time,
+    max_node, created_time, updated_time,
+    enabled, remark, public_key,
+    private_key)
+    values (#{account,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, #{expiredTime,jdbcType=TIMESTAMP},
+    #{maxNode,jdbcType=INTEGER}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP},
+    #{enabled,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{publicKey,jdbcType=LONGVARCHAR},
+    #{privateKey,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.dormi.learn.pojo.po.LicenseInfo">
+    update license_info
+    set account = #{account,jdbcType=VARCHAR},
+    product = #{product,jdbcType=VARCHAR},
+    expired_time = #{expiredTime,jdbcType=TIMESTAMP},
+    max_node = #{maxNode,jdbcType=INTEGER},
+    created_time = #{createdTime,jdbcType=TIMESTAMP},
+    updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+    enabled = #{enabled,jdbcType=TINYINT},
+    remark = #{remark,jdbcType=VARCHAR},
+    public_key = #{publicKey,jdbcType=LONGVARCHAR},
+    private_key = #{privateKey,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, account, product, expired_time, max_node, created_time, updated_time,
+    enabled, remark, public_key, private_key
+    from license_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByAccountAndProduct" resultMap="BaseResultMap">
+    select id, account, product, expired_time, max_node, created_time, updated_time,
+    enabled, remark, public_key, private_key
+    from license_info
+    where 1=1
+    and account = #{account,jdbcType=VARCHAR}
+    and product = #{product,jdbcType=VARCHAR}
+    limit 1
+  </select>
+
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, account, product, expired_time, max_node, created_time, updated_time,
+    enabled, remark, public_key, private_key
+    from license_info
+  </select>
+</mapper>

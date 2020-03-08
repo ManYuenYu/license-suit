@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dormi.learn.pojo.po.ClientInfoMapper">
+  <resultMap id="BaseResultMap" type="org.dormi.learn.pojo.po.ClientInfo">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="account" jdbcType="VARCHAR" property="account"/>
+    <result column="product" jdbcType="VARCHAR" property="product"/>
+    <result column="client_uuid" jdbcType="VARCHAR" property="clientUuid"/>
+    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
+    <result column="last_check_time" jdbcType="TIMESTAMP" property="lastCheckTime"/>
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+    <result column="enabled" jdbcType="TINYINT" property="enabled"/>
+    <result column="remark" jdbcType="VARCHAR" property="remark"/>
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from client_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.dormi.learn.pojo.po.ClientInfo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into client_info (account, product, client_uuid,
+    register_time, last_check_time, created_time,
+    updated_time, enabled, remark
+    )
+    values (#{account,jdbcType=VARCHAR}, #{product,jdbcType=VARCHAR}, #{clientUuid,jdbcType=VARCHAR},
+    #{registerTime,jdbcType=TIMESTAMP}, #{lastCheckTime,jdbcType=TIMESTAMP}, #{createdTime,jdbcType=TIMESTAMP},
+    #{updatedTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.dormi.learn.pojo.po.ClientInfo">
+    update client_info
+    set account = #{account,jdbcType=VARCHAR},
+    product = #{product,jdbcType=VARCHAR},
+    client_uuid = #{clientUuid,jdbcType=VARCHAR},
+    register_time = #{registerTime,jdbcType=TIMESTAMP},
+    last_check_time = #{lastCheckTime,jdbcType=TIMESTAMP},
+    created_time = #{createdTime,jdbcType=TIMESTAMP},
+    updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+    enabled = #{enabled,jdbcType=TINYINT},
+    remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, account, product, client_uuid, register_time, last_check_time, created_time,
+    updated_time, enabled, remark
+    from client_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, account, product, client_uuid, register_time, last_check_time, created_time,
+    updated_time, enabled, remark
+    from client_info
+  </select>
+</mapper>
